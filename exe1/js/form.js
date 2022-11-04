@@ -8,11 +8,19 @@ botaoAdd.addEventListener("click", function(event){
 
     var pacienteTr = createTableRow(paciente);
 
-    var tabela = document.querySelector("#tabela-pacientes");
+    var erros = checkPacient(paciente);
 
-    tabela.appendChild(pacienteTr);
+    if(erros.length > 0){
+        showErrorMessage(erros);
+        return;
+    }
+    else{
+        var tabela = document.querySelector("#tabela-pacientes");
 
-    form.reset(); // limpa o forms após clicar em adicionar
+        tabela.appendChild(pacienteTr);
+    
+        form.reset(); // limpa o forms após clicar em adicionar
+    }
 });
 
 function getPacientFromForm(form){
@@ -46,4 +54,36 @@ function createTableColumn(dado, classe){
     td.classList.add(classe);
 
     return td;
+}
+
+function showErrorMessage(erros){
+    var ul = document.querySelector("#mensagens-erro");
+
+    erros.forEach(function (erro) {
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
+}
+
+function checkPacient(paciente){
+    var erros = [];
+
+    if(checkWeight(paciente.peso)){
+        if(checkHeight(paciente.altura)){
+            return "";
+        }
+        else{
+            return erros.push("Altura inválida!");
+        }
+    }
+    else{
+
+        if(checkHeight(paciente.altura)){
+            return erros.push("Peso inválido!");
+        }
+        else{
+            return erros.push("Peso inválido!", "Altura inválida!");
+        }
+    }
 }
