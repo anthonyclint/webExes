@@ -20,6 +20,9 @@ botaoAdd.addEventListener("click", function(event){
         tabela.appendChild(pacienteTr);
     
         form.reset(); // limpa o forms após clicar em adicionar
+
+        var errorMessage = document.querySelector("#mensagens-erro");
+        errorMessage.innerHTML = "";
     }
 });
 
@@ -58,6 +61,7 @@ function createTableColumn(dado, classe){
 
 function showErrorMessage(erros){
     var ul = document.querySelector("#mensagens-erro");
+    ul.innerHTML = "";
 
     erros.forEach(function (erro) {
         var li = document.createElement("li");
@@ -69,21 +73,10 @@ function showErrorMessage(erros){
 function checkPacient(paciente){
     var erros = [];
 
-    if(checkWeight(paciente.peso)){
-        if(checkHeight(paciente.altura)){
-            return "";
-        }
-        else{
-            return erros.push("Altura inválida!");
-        }
-    }
-    else{
+    if(paciente.nome.length == 0) erros.push("O nome não pode ficar em branco!");
+    if(!checkWeight(paciente.peso)) erros.push("Peso Inválido!");
+    if(!checkHeight(paciente.altura)) erros.push("Altura Inválida!");
+    if(paciente.gordura.length == 0) erros.push("A % de gordura não pode ficar em branco!");
 
-        if(checkHeight(paciente.altura)){
-            return erros.push("Peso inválido!");
-        }
-        else{
-            return erros.push("Peso inválido!", "Altura inválida!");
-        }
-    }
+    return erros;
 }
