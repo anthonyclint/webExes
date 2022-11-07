@@ -8,8 +8,10 @@ campoFiltro.addEventListener("input", function(){
             var paciente = pacientes[i];
             var tdNome = paciente.querySelector(".info-nome");
             var nome = tdNome.textContent;
+
+            var expressao = new RegExp(this.value, "i"); // RegExp -> pesquisa todas as palavras iniciadas por um trecho de string e "i" define case insensitive.
             
-            if(nome != this.value){
+            if(!expressao.test(nome)){
                 paciente.classList.add("invisivel");
             }
             else{
