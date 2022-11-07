@@ -4,9 +4,7 @@ botaoAdd.addEventListener("click", function(event){
     
     var form = document.querySelector("#form-adiciona");
 
-    var paciente = getPacientFromForm(form);
-
-    var pacienteTr = createTableRow(paciente);
+    var paciente = getPacientFromForm(form); 
 
     var erros = checkPacient(paciente);
 
@@ -15,9 +13,7 @@ botaoAdd.addEventListener("click", function(event){
         return;
     }
     else{
-        var tabela = document.querySelector("#tabela-pacientes");
-
-        tabela.appendChild(pacienteTr);
+        addPacient(paciente);
     
         form.reset(); // limpa o forms após clicar em adicionar
 
@@ -25,6 +21,12 @@ botaoAdd.addEventListener("click", function(event){
         errorMessage.innerHTML = "";
     }
 });
+
+function addPacient(paciente){
+    var pacienteTr = createTableRow(paciente);
+    var tabela = document.querySelector("#tabela-pacientes");
+    tabela.appendChild(pacienteTr);
+}
 
 function getPacientFromForm(form){
     var paciente = {
